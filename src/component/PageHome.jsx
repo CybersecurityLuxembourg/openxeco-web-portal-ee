@@ -102,7 +102,7 @@ export default class PageHome extends React.Component {
 					{this.state.news && this.state.news.length === 0
 						&& <div className="col-md-12">
 							<Message
-								text={"No coming event found"}
+								text={"No news found"}
 								height={300}
 							/>
 						</div>
@@ -129,13 +129,13 @@ export default class PageHome extends React.Component {
 
 				<div className="row row-spaced">
 					<div className="col-md-12">
-						<h1>Latest events</h1>
+						<h1>Upcoming events</h1>
 					</div>
 
 					{this.state.events && this.state.events.length === 0
 						&& <div className="col-md-12">
 							<Message
-								text={"No coming event found"}
+								text={"No upcoming event found"}
 								height={300}
 							/>
 						</div>
@@ -168,7 +168,7 @@ export default class PageHome extends React.Component {
 					{this.state.jobs && this.state.jobs.length === 0
 						&& <div className="col-md-12">
 							<Message
-								text={"No coming event found"}
+								text={"No job offer found"}
 								height={300}
 							/>
 						</div>
