@@ -58,17 +58,18 @@ export default class Footer extends React.Component {
 						<div className="col-md-6 Footer-contact">
 							<div className="Footer-title">CONTACT</div>
 							<br/>
-							<div>My Company g.i.e.</div>
-							<div>xx, Technology Street</div>
-							<div>1234 Country</div>
+							<div>Encryption Europe</div>
+							<div>co/ SECURITYMADEIN.LU</div>
+							<div>16, boulevard d&apos;Avranches</div>
+							<div>L-1160 Luxembourg</div>
 							<br/><br/>
-							<div>(+000) 000 00 00 000</div>
+							<div>contact@encryptioneurope.eu</div>
 						</div>
 
 						<div className="col-md-2">
 							<div className="Footer-network">
 								<a
-									href="https://twitter.com/"
+									href="https://twitter.com/encrypteurope"
 									rel="noreferrer"
 									target="_blank"
 									title="Twitter"
@@ -76,7 +77,7 @@ export default class Footer extends React.Component {
 									<i className="fab fa-twitter Footer-network"/>
 								</a>
 								<a
-									href="https://www.linkedin.com/"
+									href="https://www.linkedin.com/company/encryption-europe/"
 									rel="noreferrer"
 									target="_blank"
 									title="LinkedIn"
