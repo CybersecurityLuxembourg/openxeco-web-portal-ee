@@ -130,7 +130,7 @@ export default class PageJobs extends React.Component {
 					&& <div className="row row-spaced">
 						<div className="col-md-12">
 							<Message
-								text={"No article found"}
+								text={"No job offer found"}
 								height={200}
 							/>
 						</div>
