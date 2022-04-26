@@ -1,4 +1,4 @@
-name: Build and deploy on validation environment
+name: Build and deploy on production environment
 
 on:
   push:
