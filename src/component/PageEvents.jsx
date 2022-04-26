@@ -9,11 +9,12 @@ import Loading from "./box/Loading.jsx";
 import { getRequest } from "../utils/request.jsx";
 import EventHorizontal from "./item/EventHorizontal.jsx";
 import Message from "./box/Message.jsx";
-import { getUrlParameter, dictToURI } from "../utils/url.jsx";
+import { dictToURI } from "../utils/url.jsx";
 import EventSearch from "./form/EventSearch.jsx";
 import SimpleTable from "./table/SimpleTable.jsx";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { getSettingValue } from "../utils/setting.jsx";
+import { dateToString } from "../utils/date.jsx";
 
 const localizer = momentLocalizer(moment);
 
@@ -28,10 +29,11 @@ export default class PageCalendar extends React.Component {
 			articles: null,
 			filters: {
 				type: "EVENT",
-				taxonomy_values: getUrlParameter("taxonomy_values") !== null
-					? getUrlParameter("taxonomy_values").split(",").map((v) => parseInt(v, 10)) : [],
 				title: null,
 				include_tags: "true",
+				order_by: "start_date",
+				min_start_date: dateToString(new Date()),
+				order: "asc",
 			},
 		};
 	}
@@ -44,13 +46,6 @@ export default class PageCalendar extends React.Component {
 		this.setState({
 			articles: null,
 		});
-
-		const urlParams = dictToURI({
-			taxonomy_values: this.state.filters.taxonomy_values,
-		});
-
-		// eslint-disable-next-line no-restricted-globals
-		history.replaceState(null, null, "?" + urlParams);
 
 		this.requestArticles(1);
 	}
@@ -138,8 +133,7 @@ export default class PageCalendar extends React.Component {
 					</div>
 				</div>
 
-				{this.state.articles !== null && this.state.articles !== undefined
-					&& this.state.articles.filter((a) => new Date(a.end_date) > new Date()).length === 0
+				{this.state.articles && this.state.articles.length === 0
 					&& <div className="row">
 						<div className="col-md-12">
 							<Message
@@ -150,14 +144,10 @@ export default class PageCalendar extends React.Component {
 					</div>
 				}
 
-				{this.state.articles !== null && this.state.articles !== undefined
-					&& this.state.articles.filter((a) => new Date(a.end_date) > new Date()).length > 0
+				{this.state.articles && this.state.articles.length > 0
 					&& <SimpleTable
-						numberDisplayed={5}
-						elements={this.state.articles
-							.filter((a) => new Date(a.end_date) > new Date())
-							.sort((a, b) => (a.start_date > b.start_date ? 1 : -1))
-							.map((a, i) => [a, i])}
+						numberDisplayed={3}
+						elements={this.state.articles}
 						buildElement={(a) => <div className="col-md-12">
 							<EventHorizontal
 								info={a}
@@ -168,7 +158,7 @@ export default class PageCalendar extends React.Component {
 					/>
 				}
 
-				{(this.state.articles === null || this.state.articles === undefined)
+				{!this.state.articles
 					&& <div className="row">
 						<div className="col-md-12">
 							<Loading
