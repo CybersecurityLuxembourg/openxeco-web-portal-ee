@@ -8,6 +8,7 @@ import Article from "./item/Article.jsx";
 import Event from "./item/Event.jsx";
 import JobOfferHorizontal from "./item/JobOfferHorizontal.jsx";
 import { dictToURI } from "../utils/url.jsx";
+import { dateToString } from "../utils/date.jsx";
 
 export default class PageHome extends React.Component {
 	constructor(props) {
@@ -55,6 +56,9 @@ export default class PageHome extends React.Component {
 			include_tags: "true",
 			per_page: 3,
 			page: 1,
+			order_by: "start_date",
+			min_start_date: dateToString(new Date()),
+			order: "asc",
 		};
 
 		getRequest.call(this, "public/get_public_articles?" + dictToURI(params), (data) => {
