@@ -16,12 +16,13 @@ export default class PageEcosystem extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.getPublicCompany = this.getPublicCompany.bind(this);
+		this.getPublicMembers = this.getPublicMembers.bind(this);
 		this.onSearch = this.onSearch.bind(this);
 		this.modifyFilters = this.modifyFilters.bind(this);
 
 		this.state = {
-			companies: null,
+			members: null,
+			taxonomy: null,
 			filters: {
 				name: getUrlParameter("name"),
 			},
@@ -29,17 +30,18 @@ export default class PageEcosystem extends React.Component {
 	}
 
 	componentDidMount() {
-		this.getPublicCompany();
+		this.getPublicTaxonomy();
 	}
 
-	getPublicCompany() {
+	getPublicTaxonomy() {
 		this.setState({
-			companies: null,
+			taxonomy: null,
 		}, () => {
-			getRequest.call(this, "public/get_public_companies?"
-				+ dictToURI(this.state.filters), (data) => {
+			getRequest.call(this, "public/get_public_taxonomy", (data) => {
 				this.setState({
-					companies: data.sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1)),
+					taxonomy: data,
+				}, () => {
+					this.getPublicMembers();
 				});
 			}, (response) => {
 				nm.warning(response.statusText);
@@ -49,11 +51,42 @@ export default class PageEcosystem extends React.Component {
 		});
 	}
 
+	getPublicMembers() {
+		this.setState({
+			members: null,
+		}, () => {
+			const values = this.state.taxonomy.values
+				.filter((v) => v.category === "ECOSYSTEM ROLE" && v.name === "MEMBER");
+
+			if (values.length > 0) {
+				const params = {
+					...this.state.filters,
+					taxonomy_values: values[0].id,
+				};
+
+				getRequest.call(this, "public/get_public_companies?"
+					+ dictToURI(params), (data) => {
+					this.setState({
+						members: data,
+					});
+				}, (response) => {
+					nm.warning(response.statusText);
+				}, (error) => {
+					nm.error(error.message);
+				});
+			} else {
+				this.setState({
+					members: [],
+				});
+			}
+		});
+	}
+
 	onSearch() {
 		// eslint-disable-next-line no-restricted-globals
 		history.replaceState(null, null, "?" + dictToURI(this.state.filters));
 
-		this.getPublicCompany();
+		this.getPublicMembers();
 	}
 
 	modifyFilters(field, value) {
@@ -86,14 +119,14 @@ export default class PageEcosystem extends React.Component {
 
 				<div className="row">
 					<div className="col-md-12">
-						<h1>Companies</h1>
+						<h1>Members</h1>
 					</div>
 				</div>
 
-				{this.state.companies !== null && this.state.companies.length > 0
+				{this.state.members && this.state.members.length > 0
 					&& <SimpleTable
 						numberDisplayed={10}
-						elements={this.state.companies.map((a, i) => [a, i])}
+						elements={this.state.members.map((a, i) => [a, i])}
 						buildElement={(a) => (
 							<div className="col-md-6">
 								<Company
@@ -104,14 +137,14 @@ export default class PageEcosystem extends React.Component {
 					/>
 				}
 
-				{this.state.companies !== null && this.state.companies.length === 0
+				{this.state.members && this.state.members.length === 0
 					&& <Message
-						text={"No entity found"}
+						text={"No member found"}
 						height={300}
 					/>
 				}
 
-				{this.state.companies === null
+				{!this.state.members
 					&& <div className="row">
 						<div className="col-md-12">
 							<Loading
