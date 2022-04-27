@@ -126,7 +126,7 @@ export default class PageEcosystem extends React.Component {
 				{this.state.members && this.state.members.length > 0
 					&& <SimpleTable
 						numberDisplayed={10}
-						elements={this.state.members.map((a, i) => [a, i])}
+						elements={this.state.members}
 						buildElement={(a) => (
 							<div className="col-md-6">
 								<Company
