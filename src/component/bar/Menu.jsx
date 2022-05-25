@@ -51,12 +51,6 @@ export default class Menu extends React.Component {
 					<div className="Menu-description">Where to meet?</div>
 				</Link>
 			</Nav.Link>
-			<Nav.Link>
-				<Link to="/jobs">
-					<div className="Menu-title">Jobs</div>
-					<div className="Menu-description">Marketplace</div>
-				</Link>
-			</Nav.Link>
 		</Nav>;
 	}
 

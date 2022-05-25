@@ -8,7 +8,6 @@ import Footer from "./bar/Footer.jsx";
 import PageHome from "./PageHome.jsx";
 import PageEcosystem from "./PageEcosystem.jsx";
 import PageNews from "./PageNews.jsx";
-import PageJobs from "./PageJobs.jsx";
 import PageEvents from "./PageEvents.jsx";
 import PageArticle from "./PageArticle.jsx";
 import PageEvent from "./PageEvent.jsx";
@@ -68,9 +67,6 @@ export default class InsideApp extends React.Component {
 							{...props} settings={this.state.settings}
 						/>}/>
 						<Route path="/events" render={(props) => <PageEvents
-							{...props} settings={this.state.settings}
-						/>}/>
-						<Route path="/jobs" render={(props) => <PageJobs
 							{...props} settings={this.state.settings}
 						/>}/>
 						<Route path="/search" render={(props) => <PageSearch
