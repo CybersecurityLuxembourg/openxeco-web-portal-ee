@@ -6,7 +6,6 @@ import Message from "./box/Message.jsx";
 import { getRequest } from "../utils/request.jsx";
 import Article from "./item/Article.jsx";
 import Event from "./item/Event.jsx";
-import JobOfferHorizontal from "./item/JobOfferHorizontal.jsx";
 import { dictToURI } from "../utils/url.jsx";
 import { dateToString } from "../utils/date.jsx";
 
@@ -16,19 +15,16 @@ export default class PageHome extends React.Component {
 
 		this.getNews = this.getNews.bind(this);
 		this.getEvents = this.getEvents.bind(this);
-		this.getJobs = this.getJobs.bind(this);
 
 		this.state = {
 			news: null,
 			events: null,
-			jobs: null,
 		};
 	}
 
 	componentDidMount() {
 		this.getNews();
 		this.getEvents();
-		this.getJobs();
 	}
 
 	getNews() {
@@ -64,25 +60,6 @@ export default class PageHome extends React.Component {
 		getRequest.call(this, "public/get_public_articles?" + dictToURI(params), (data) => {
 			this.setState({
 				events: data.items,
-			});
-		}, (response) => {
-			nm.warning(response.statusText);
-		}, (error) => {
-			nm.error(error.message);
-		});
-	}
-
-	getJobs() {
-		const params = {
-			type: "JOB OFFER",
-			include_tags: "true",
-			per_page: 3,
-			page: 1,
-		};
-
-		getRequest.call(this, "public/get_public_articles?" + dictToURI(params), (data) => {
-			this.setState({
-				jobs: data.items,
 			});
 		}, (response) => {
 			nm.warning(response.statusText);
@@ -156,39 +133,6 @@ export default class PageHome extends React.Component {
 					}
 
 					{this.state.events === null
-						&& <div className="col-md-12">
-							<Loading
-								height={300}
-							/>
-						</div>
-					}
-				</div>
-
-				<div className="row row-spaced">
-					<div className="col-md-12">
-						<h1>Latest jobs</h1>
-					</div>
-
-					{this.state.jobs && this.state.jobs.length === 0
-						&& <div className="col-md-12">
-							<Message
-								text={"No job offer found"}
-								height={300}
-							/>
-						</div>
-					}
-
-					{this.state.jobs && this.state.jobs.length > 0
-						&& this.state.jobs.map((e) => (
-							<div className="col-md-12" key={e.id}>
-								<JobOfferHorizontal
-									info={e}
-								/>
-							</div>
-						))
-					}
-
-					{this.state.jobs === null
 						&& <div className="col-md-12">
 							<Loading
 								height={300}
