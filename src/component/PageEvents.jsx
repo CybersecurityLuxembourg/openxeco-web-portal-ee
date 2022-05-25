@@ -32,7 +32,6 @@ export default class PageCalendar extends React.Component {
 				title: null,
 				include_tags: "true",
 				order_by: "start_date",
-				min_start_date: dateToString(new Date()),
 				order: "asc",
 			},
 		};
@@ -147,7 +146,7 @@ export default class PageCalendar extends React.Component {
 				{this.state.articles && this.state.articles.length > 0
 					&& <SimpleTable
 						numberDisplayed={3}
-						elements={this.state.articles}
+						elements={this.state.articles.filter((a) => a.end_date > dateToString(new Date()))}
 						buildElement={(a) => <div className="col-md-12">
 							<EventHorizontal
 								info={a}
