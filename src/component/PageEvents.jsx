@@ -132,7 +132,8 @@ export default class PageCalendar extends React.Component {
 					</div>
 				</div>
 
-				{this.state.articles && this.state.articles.length === 0
+				{this.state.articles
+					&& this.state.articles.filter((a) => a.end_date > dateToString(new Date())).length === 0
 					&& <div className="row">
 						<div className="col-md-12">
 							<Message
@@ -143,7 +144,8 @@ export default class PageCalendar extends React.Component {
 					</div>
 				}
 
-				{this.state.articles && this.state.articles.length > 0
+				{this.state.articles
+					&& this.state.articles.filter((a) => a.end_date > dateToString(new Date())).length > 0
 					&& <SimpleTable
 						numberDisplayed={3}
 						elements={this.state.articles.filter((a) => a.end_date > dateToString(new Date()))}
