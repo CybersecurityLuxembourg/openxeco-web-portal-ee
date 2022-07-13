@@ -64,8 +64,7 @@ export default class PageEcosystem extends React.Component {
 					taxonomy_values: values[0].id,
 				};
 
-				getRequest.call(this, "public/get_public_companies?"
-					+ dictToURI(params), (data) => {
+				getRequest.call(this, "public/get_public_companies?" + dictToURI(params), (data) => {
 					this.setState({
 						members: data,
 					});

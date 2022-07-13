@@ -39,14 +39,14 @@ export default class PageJob extends React.Component {
 			relatedArticleLoading: false,
 		});
 
-		getRequest.call(this, "public/get_article_content/" + this.props.match.params.handle, (data) => {
+		getRequest.call(this, "public/get_public_article_content/" + this.props.match.params.handle, (data) => {
 			this.setState({
 				article: data,
 				articleLoading: false,
 			});
 
 			if (data.type === "NEWS") {
-				getRequest.call(this, "public/get_related_articles/" + this.props.match.params.handle, (data2) => {
+				getRequest.call(this, "public/get_public_related_articles/" + this.props.match.params.handle, (data2) => {
 					this.setState({
 						relatedArticles: data2,
 						relatedArticleLoading: false,
