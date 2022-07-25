@@ -1,5 +1,5 @@
 import React from "react";
-import "./PageEcosystem.css";
+import "./PageMember.css";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { Link } from "react-router-dom";
 import { NotificationManager as nm } from "react-notifications";
@@ -7,12 +7,11 @@ import { getRequest } from "../utils/request.jsx";
 import Loading from "./box/Loading.jsx";
 import Message from "./box/Message.jsx";
 import Company from "./item/Company.jsx";
-import SimpleTable from "./table/SimpleTable.jsx";
 import CompanySearch from "./form/CompanySearch.jsx";
 import { getUrlParameter, dictToURI } from "../utils/url.jsx";
 import { getSettingValue } from "../utils/setting.jsx";
 
-export default class PageEcosystem extends React.Component {
+export default class PageMember extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -96,7 +95,7 @@ export default class PageEcosystem extends React.Component {
 
 	render() {
 		return (
-			<div className={"PageEcosystem page max-sized-page"}>
+			<div className={"PageMember page max-sized-page"}>
 				<div className="row">
 					<div className="col-md-12">
 						<Breadcrumb>
@@ -105,7 +104,7 @@ export default class PageEcosystem extends React.Component {
 									<Link to="/">{getSettingValue(this.props.settings, "PROJECT_NAME")}</Link>
 								</Breadcrumb.Item>
 							}
-							<Breadcrumb.Item><Link to="/ecosystem">Ecosystem</Link></Breadcrumb.Item>
+							<Breadcrumb.Item><Link to="/members">Members</Link></Breadcrumb.Item>
 						</Breadcrumb>
 					</div>
 				</div>
@@ -122,36 +121,36 @@ export default class PageEcosystem extends React.Component {
 					</div>
 				</div>
 
-				{this.state.members && this.state.members.length > 0
-					&& <SimpleTable
-						numberDisplayed={10}
-						elements={this.state.members}
-						buildElement={(a) => (
-							<div className="col-md-6">
+				<div className="row row-spaced">
+					{this.state.members && this.state.members.length > 0
+						&& this.state.members.map((m) => (
+							<div
+								className="col-md-6"
+								key={m.id}>
 								<Company
-									info={a}
+									info={m}
 								/>
 							</div>
-						)}
-					/>
-				}
+						))
+					}
 
-				{this.state.members && this.state.members.length === 0
-					&& <Message
-						text={"No member found"}
-						height={300}
-					/>
-				}
-
-				{!this.state.members
-					&& <div className="row">
-						<div className="col-md-12">
-							<Loading
-								height={400}
+					{this.state.members && this.state.members.length === 0
+						&& <div className="col-md-12">
+							<Message
+								text={"No member found"}
+								height={300}
 							/>
 						</div>
-					</div>
-				}
+					}
+
+					{!this.state.members
+						&& <div className="col-md-12">
+							<Loading
+								height={300}
+							/>
+						</div>
+					}
+				</div>
 			</div>
 		);
 	}

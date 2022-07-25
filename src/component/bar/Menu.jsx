@@ -34,8 +34,8 @@ export default class Menu extends React.Component {
 	getNavBar() {
 		return <Nav className="mr-sm-2 ml-auto">
 			<Nav.Link>
-				<Link to="/ecosystem">
-					<div className="Menu-title">Ecosystem</div>
+				<Link to="/members">
+					<div className="Menu-title">Members</div>
 					<div className="Menu-description">View on the community</div>
 				</Link>
 			</Nav.Link>
